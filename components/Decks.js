@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { fetchDeckResults } from '../utils/api'
-import { white } from '../utils/colors'
+import { white, black, gray } from '../utils/colors'
 import { AppLoading } from 'expo'
+
+function Deck ({ title, questions }) {
+  return (
+    <View style={styles.card}>
+      <Text style={{ fontSize: 18, color: black }}>{title}</Text>
+      <Text style={{ fontSize: 14, color: gray }}>{questions.length} cards</Text>
+    </View>
+  )
+}
 
 class Decks extends Component {
 	state = {
@@ -21,11 +30,13 @@ class Decks extends Component {
       })))
   }
   
+  renderItem = ({ item }) => {
+    return <Deck {...item}/>
+  }
+
   render() {
     const { decks } = this.props
     const { ready } = this.state
-
-    console.log('decks', decks)
 
     if (ready === false) {
       return <AppLoading />
@@ -33,7 +44,11 @@ class Decks extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>Decks: {JSON.stringify(decks)}</Text>
+        <FlatList 
+          data={Object.values(decks)}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.title}
+        />
       </View>
     )
   }
@@ -42,15 +57,21 @@ class Decks extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+  },
+  card: {
+    paddingTop: 40,
+    paddingBottom: 40,
+    paddingRight: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: black,
+    backgroundColor: white,
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
 })
 
 function mapStateToProps (decks) {
-  return {
-    decks
-  }
+  return { decks }
 }
 
 export default connect(mapStateToProps)(Decks)
