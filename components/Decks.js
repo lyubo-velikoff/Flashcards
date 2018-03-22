@@ -5,15 +5,7 @@ import { receiveDecks } from '../actions'
 import { fetchDeckResults } from '../utils/api'
 import { white, black, gray } from '../utils/colors'
 import { AppLoading } from 'expo'
-
-function Deck ({ title, questions }) {
-  return (
-    <View style={styles.card}>
-      <Text style={{ fontSize: 18, color: black }}>{title}</Text>
-      <Text style={{ fontSize: 14, color: gray }}>{questions.length} cards</Text>
-    </View>
-  )
-}
+import Deck from './DeckCard.js'
 
 class Decks extends Component {
 	state = {
@@ -30,9 +22,15 @@ class Decks extends Component {
       })))
   }
   
-  renderItem = ({ item }) => {
-    return <Deck {...item}/>
-  }
+  renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => this.props.navigation.navigate(
+      'DeckDetail',
+      { deckId: item.title }
+    )}>
+      <Deck {...item}/>
+    </TouchableOpacity>
+  )
+  
 
   render() {
     const { decks } = this.props
@@ -57,16 +55,6 @@ class Decks extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  card: {
-    paddingTop: 40,
-    paddingBottom: 40,
-    paddingRight: 0,
-    borderBottomWidth: 1,
-    borderBottomColor: black,
-    backgroundColor: white,
-    flexWrap: 'wrap',
-    alignItems: 'center',
   },
 })
 
