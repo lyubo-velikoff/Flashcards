@@ -26,7 +26,10 @@ class DeckDetail extends Component {
             text='Add Card'
             onPress={() => this.props.navigation.navigate('AddCard', { deckId: decks.title })}
           />
-          <Button onPress={() => console.log('submitted')} text='Start Quiz' />
+          <Button 
+            text='Start Quiz'
+            onPress={() => this.props.navigation.navigate('Quiz', { questions: decks.questions })}
+          />
         </View>
       </View>
     )

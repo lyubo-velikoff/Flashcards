@@ -11,6 +11,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import { white, black } from './utils/colors'
 import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 
 function FlashcardsStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -65,6 +66,9 @@ const MainNavigator = StackNavigator({
   AddCard: {
     screen: AddCard,
   },
+  Quiz: {
+    screen: Quiz,
+  }
 }, {
   navigationOptions: {
     headerBackTitle: null,
