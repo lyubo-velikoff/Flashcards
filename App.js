@@ -9,6 +9,8 @@ import AddDeck from './components/AddDeck'
 import Decks from './components/Decks'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { white, black } from './utils/colors'
+import DeckDetail from './components/DeckDetail'
+import AddCard from './components/AddCard'
 
 function FlashcardsStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -29,7 +31,7 @@ const Tabs = TabNavigator ({
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: 'Add Decks',
+      tabBarLabel: 'New Deck',
       tabBarIcon: ({ tintColor }) => <Entypo name="squared-plus" size={30} color={tintColor} />
     }
   }
@@ -56,6 +58,20 @@ const Tabs = TabNavigator ({
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+  },
+  AddCard: {
+    screen: AddCard,
+  },
+}, {
+  navigationOptions: {
+    headerBackTitle: null,
+    headerTintColor: white,
+    headerStyle: {
+      backgroundColor: black
+    }
   },
 })
 
