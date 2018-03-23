@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Platform, TextInput } from 'react-native'
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Platform, 
+  TextInput, 
+  KeyboardAvoidingView 
+} from 'react-native'
 import { connect } from 'react-redux'
-import { addDeck } from '../actions'
-import { white, black, gray } from '../utils/colors'
+import { addDeck, receiveDecks } from '../actions'
+import { saveDeckTitle, fetchDeckResults } from '../utils/api'
+import { white, black, gray, red } from '../utils/colors'
 import Button from './Button'
+import { NavigationActions } from 'react-navigation'
 
 class AddDeck extends Component {
+
 	state = {
-    title: ''
+    title: '',
+    valid: true
   }
 
   handleChange (fieldName, fieldValue) {
@@ -19,19 +31,61 @@ class AddDeck extends Component {
     })
   }
 
+  submit = () => {
+    const { dispatch, navigation } = this.props
+    const { valid, title } = this.state
+
+    if (title) {
+
+      saveDeckTitle(title)
+        .then((deck) => dispatch(addDeck(deck)))
+        .then(() => {
+          this.refs['title'].setNativeProps({text: ''})
+          this.setState(() => ({
+            valid: true,
+            title: ''
+          })) 
+        })
+        .then(() => {
+          fetchDeckResults()
+            .then(( decks ) => dispatch(receiveDecks(decks)))
+            .then(() => this.toDetail(title))
+          })
+          
+        this.toHome()
+    } else {
+      this.handleChange('valid', false)
+    }
+
+  }
+
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({
+      key: 'DeckDetail'
+    }))
+  }
+
+  toDetail = (title) => {
+    this.props.navigation.navigate(
+      'DeckDetail',
+      { deckId: title }
+    )
+  }
+
 	render() {
 		return (
-			<View style={styles.container}>
+			<KeyboardAvoidingView behavior='padding' style={styles.container}>
 				<Text style={styles.label}>What is the title of your new deck ?</Text>
         <TextInput
-          style={styles.input}
+          ref='title'
+          style={[styles.input, !this.state.valid ? styles.inputError : '']}
           onChangeText={(title) => this.handleChange('title', title)}
           value={this.state.answer}
           placeholder='Deck title'
           placeholderTextColor={gray}
         />
-        <Button text='Submit' onPress={() => console.log('pressed')} />
-			</View>
+        <Button text='Submit' onPress={this.submit} />
+			</KeyboardAvoidingView>
 		)
 	}
 }
@@ -50,6 +104,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     padding: 7
+  },
+  inputError: {
+    borderColor: red
   },
   label: {
     fontSize: 36,

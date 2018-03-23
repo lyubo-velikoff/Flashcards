@@ -16,6 +16,14 @@ export function fetchDeck(key) {
     })
 }
 
-// saveDeckTitle
+// add deck
+export function saveDeckTitle(title) {
+	return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+		[title]: {
+      title: title,
+      questions: []
+    }
+	}))
+}
 
 // addCardToDeck
