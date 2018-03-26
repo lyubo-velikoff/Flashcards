@@ -84,7 +84,7 @@ class AddDeck extends Component {
           placeholder='Deck title'
           placeholderTextColor={gray}
         />
-        <Button text='Submit' onPress={this.submit} />
+        <Button text='Create Deck' onPress={this.submit} />
 			</KeyboardAvoidingView>
 		)
 	}
