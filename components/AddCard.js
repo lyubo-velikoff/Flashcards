@@ -89,10 +89,11 @@ class AddCard extends Component {
     }))
   }
 
-  toDetail = (title) => {
-    this.props.navigation.navigate(
+  toDetail = () => {
+    const { navigation } = this.props
+    navigation.navigate(
       'DeckDetail',
-      { deckId: title, onGoBack: () => this.refresh() }
+      { deckId: navigation.state.params.deckId, onGoBack: () => this.refresh() }
     )
   }
 

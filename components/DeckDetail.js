@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { white, black} from '../utils/colors'
-import { addDeck } from '../actions'
+import { addDeck, receiveDeck } from '../actions'
 import Deck from './DeckCard'
 import Button from './Button'
 
 class DeckDetail extends Component {
+
 	static navigationOptions = ({ navigation }) => {
 		const { deckId } = navigation.state.params
 		return {
@@ -14,23 +15,34 @@ class DeckDetail extends Component {
 		}
   }
   
+  componentDidMount() {
+    const { navigation } = this.props
+    receiveDeck(navigation.state.params.deckId)
+  }
+  
+  componentDidUpdate() {
+    const { navigation } = this.props
+    receiveDeck(navigation.state.params.deckId)
+  }
+
   render() {
-    const { decks } = this.props
+    const { decks, navigation } = this.props
 
     return (
       <View style={styles.container}>
-        
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Deck {...decks} />
-          <Button 
-            text='Add Card'
-            onPress={() => this.props.navigation.navigate('AddCard', { deckId: decks.title })}
-          />
-          <Button 
-            text='Start Quiz'
-            onPress={() => this.props.navigation.navigate('Quiz', { questions: decks.questions })}
-          />
-        </View>
+        {decks && (
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Deck {...decks} />
+            <Button 
+              text='Add Card'
+              onPress={() => navigation.navigate('AddCard', { deckId: decks.title })}
+            />
+            <Button 
+              text='Start Quiz'
+              onPress={() => navigation.navigate('Quiz', { questions: decks.questions })}
+            />
+          </View>
+        )}
       </View>
     )
   }
