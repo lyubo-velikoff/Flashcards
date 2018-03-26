@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, TouchableOpacity, FlatList } from 'react-native'
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  Platform, 
+  TouchableOpacity, 
+  FlatList 
+} from 'react-native'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { fetchDeckResults } from '../utils/api'

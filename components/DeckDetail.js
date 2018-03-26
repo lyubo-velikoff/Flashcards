@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Platform 
+} from 'react-native'
 import { connect } from 'react-redux'
 import { white, black} from '../utils/colors'
-import { addDeck, receiveDeck } from '../actions'
+import { addDeck } from '../actions'
 import Deck from './DeckCard'
 import Button from './Button'
+import { HeaderBackButton, NavigationActions } from 'react-navigation'
 
 class DeckDetail extends Component {
 
 	static navigationOptions = ({ navigation }) => {
 		const { deckId } = navigation.state.params
 		return {
-			title: deckId
+      title: deckId,
+      headerLeft: <HeaderBackButton tintColor={white} onPress={() => navigation.navigate('Home')} />,
 		}
-  }
-  
-  componentDidMount() {
-    const { navigation } = this.props
-    receiveDeck(navigation.state.params.deckId)
-  }
-  
-  componentDidUpdate() {
-    const { navigation } = this.props
-    receiveDeck(navigation.state.params.deckId)
   }
 
   render() {
@@ -65,12 +63,4 @@ function mapStateToProps (state, { navigation }) {
   }
 }
 
-function mapDispatchToProps(dispatch, { navigation }) {
-  const { deckId } = navigation.state.params
-
-  return {
-    goBack: () => navigation.goBack()
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DeckDetail)
+export default connect(mapStateToProps)(DeckDetail)

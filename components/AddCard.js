@@ -49,51 +49,44 @@ class AddCard extends Component {
 
     if (question && answer) {
       addCardToDeck(deckId, card)
-      .then(() => dispatch(addCard(deckId, card)))
-      .then(() => {
-        this.refs['question'].setNativeProps({text: ''})
-        this.refs['answer'].setNativeProps({text: ''})
-        this.setState(() => ({
-          valid: true,
-          question: '',
-          answer: '',
-        })) 
-      })
-      .then(() => {
-        fetchDeckResults()
-          .then(( decks ) => dispatch(receiveDecks(decks)))
-      })
-      .then(() => {
-        Alert.alert(
-          'Would you like to add another card?',
-          '',
-          [
-            {text: 'Yes', onPress: () => this.refs['question'].focus()},
-            {text: 'No', onPress: () => {
-              this.toDetail()
-            }, style: 'cancel'},
-          ],
-          { cancelable: false }
-        )
-      })
+        .then(() => dispatch(addCard(deckId, card)))
+        .then(() => {
+          this.refs['question'].setNativeProps({text: ''})
+          this.refs['answer'].setNativeProps({text: ''})
+          this.setState(() => ({
+            valid: true,
+            question: '',
+            answer: '',
+          })) 
+        })
+        .then(() => {
+          fetchDeckResults()
+            .then(( decks ) => dispatch(receiveDecks(decks)))
+        })
+        .then(() => {
+          Alert.alert(
+            'Would you like to add another card?',
+            '',
+            [
+              {text: 'Yes', onPress: () => this.refs['question'].focus()},
+              {text: 'No', onPress: () => {
+                this.toDetail()
+              }, style: 'cancel'},
+            ],
+            { cancelable: false }
+          )
+        })
     } else {
       this.handleChange('valid', false)
     }
     
   }
 
-  toHome = () => {
-    console.log('setting up back button')
-    this.props.navigation.dispatch(NavigationActions.back({
-      key: 'Home'
-    }))
-  }
-
   toDetail = () => {
     const { navigation } = this.props
     navigation.navigate(
       'DeckDetail',
-      { deckId: navigation.state.params.deckId, onGoBack: () => this.refresh() }
+      { deckId: navigation.state.params.deckId}
     )
   }
 
