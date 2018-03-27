@@ -4,7 +4,7 @@ import { Notifications, Permissions } from 'expo'
 const NOTIFICATION_KEY = 'Flashcards:notification'
 
 export function clearLocalNotifications() {
-  AsyncStorage.removeItem(NOTIFICATION_KEY)
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync())
 }
 
@@ -28,7 +28,6 @@ export function setLocalNotification() {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then((data) => {
-      console.log(data)
       if (data === null) {
         Permissions.askAsync(Permissions.NOTIFICATIONS)
           .then(({ status }) => {
