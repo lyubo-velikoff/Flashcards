@@ -3,8 +3,7 @@ import {
   View, 
   Text, 
   StyleSheet, 
-  TouchableOpacity, 
-  Platform 
+  TouchableOpacity,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { white, black} from '../utils/colors'

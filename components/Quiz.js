@@ -26,12 +26,10 @@ class Quiz extends Component {
     if (index < questions.length - 1 ) {
       this.setState({ index: index + 1 })
     } else {
-
       clearLocalNotifications()
         .then(setLocalNotification)
 
       this.showAlert(questions)
-
     }
 
   }
@@ -91,7 +89,7 @@ class Quiz extends Component {
           {questions && questions[index] && (
             <View>{card}</View>
           )}
-          <TextButton style={{ padding: 20 }} onPress={() => this.setState({ revealAnswer: !revealAnswer })} >
+          <TextButton style={{ padding: 20 }} onPress={() => this.setState({ revealAnswer: !revealAnswer })}>
             {revealAnswer ? 'Question' : 'Answer'}
           </TextButton>
           {this.quizActions(questions)}
