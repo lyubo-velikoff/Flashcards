@@ -25,7 +25,7 @@ class DeckDetail extends Component {
 
   render() {
     const { decks, navigation } = this.props
-
+    const displayQuizButton = decks.questions && decks.questions.length > 0 ? true : false
     return (
       <View style={styles.container}>
         {decks && (
@@ -35,10 +35,12 @@ class DeckDetail extends Component {
               text='Add Card'
               onPress={() => navigation.navigate('AddCard', { deckId: decks.title })}
             />
-            <Button 
-              text='Start Quiz'
-              onPress={() => navigation.navigate('Quiz', { questions: decks.questions })}
-            />
+            {displayQuizButton && (
+              <Button 
+                text='Start Quiz'
+                onPress={() => navigation.navigate('Quiz', { questions: decks.questions })}
+              />
+            )}
           </View>
         )}
       </View>
