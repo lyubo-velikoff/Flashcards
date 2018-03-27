@@ -2,11 +2,14 @@ import React from 'react'
 import { TouchableOpacity, Platform, StyleSheet, Text } from 'react-native'
 import { white, black } from '../utils/colors'
 
-export default function Button ({ onPress, text }) {
-  
+export default function Button ({ onPress, text, backgroundColor }) {
+
 	return (
 		<TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosButton : styles.androidButton}
+      style={[
+        Platform.OS === 'ios' ? styles.iosButton : styles.androidButton,
+        { backgroundColor: backgroundColor ? backgroundColor : black }
+      ]}
       onPress={onPress}
     >
       <Text style={styles.submitBtnText}>{text}</Text>
@@ -22,7 +25,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   iosButton: {
-    backgroundColor: black,
     padding: 10,
     marginLeft: 30,
     marginRight: 30,
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   androidButton: {
-    backgroundColor: black,
     padding: 10,
     marginLeft: 30,
     marginRight: 30,

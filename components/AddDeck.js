@@ -4,7 +4,6 @@ import {
   Text, 
   StyleSheet, 
   TouchableOpacity, 
-  Platform, 
   TextInput, 
   KeyboardAvoidingView 
 } from 'react-native'

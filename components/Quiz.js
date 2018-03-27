@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Alert } from 'react-native'
-import { white, black } from '../utils/colors'
+import { white, black, red, green } from '../utils/colors'
 import Button from './Button'
 import TextButton from './TextButton'
 import { setLocalNotification, clearLocalNotifications } from '../utils/_notification'
@@ -56,10 +56,10 @@ class Quiz extends Component {
   quizActions = (questions) => {
     return (
       <View>
-        <Button text='Correct' onPress={() => {
+        <Button text='Correct' backgroundColor={green} onPress={() => {
           this.setState({ correctAnswers: this.state.correctAnswers + 1 }, this.processQuiz)
         }} />
-        <Button text='Incorrect' onPress={() => this.processQuiz()} />
+        <Button text='Incorrect' backgroundColor={red} onPress={() => this.processQuiz()} />
       </View>
     )
   }

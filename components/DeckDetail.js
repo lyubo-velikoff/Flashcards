@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { white, black} from '../utils/colors'
+import { white, black, gray } from '../utils/colors'
 import { addDeck } from '../actions'
 import Deck from './DeckCard'
 import Button from './Button'
@@ -37,6 +37,7 @@ class DeckDetail extends Component {
             {displayQuizButton && (
               <Button 
                 text='Start Quiz'
+                backgroundColor={gray}
                 onPress={() => navigation.navigate('Quiz', { questions: decks.questions })}
               />
             )}
