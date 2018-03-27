@@ -37,7 +37,7 @@ class Quiz extends Component {
   showAlert = (questions) => {
     const { correctAnswers } = this.state
     const { navigation } = this.props
-    console.log(correctAnswers)
+
     Alert.alert(
       'Your score: ' + Math.round( (correctAnswers / questions.length) * 100 ) + '%',
       `You have ${correctAnswers} correct answers out of ${questions.length} questions. Try again?`,
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 10,
+    padding: 20,
   }
 })
 
